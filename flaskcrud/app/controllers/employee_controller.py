@@ -5,6 +5,11 @@ from app.database.connect import sess
 bp = Blueprint('bp',__name__)
 
 
+@bp.route("/",methods=['GET'])
+def index():
+    return "Home Page"
+
+
 @bp.route('/employee/add',methods=['POST'])
 def create():
     try:
@@ -18,9 +23,10 @@ def create():
         emp=Employee(**data)
         sess.add(emp)
         sess.commit()
-        return jsonify({"data":data})
+        return jsonify({"OK":"true","data":data}),200
     except Exception as e:
-        return {"error":str(e)}
+        sess.rollback()
+        return jsonify({"OK":"false","data":{"error":str(e)}}),422
 
 
 @bp.route('/employee/<int:id>/delete',methods=['DELETE'])
@@ -28,41 +34,44 @@ def delete_Employee(id):
     try:
         emp=sess.query(Employee).filter_by(id=id).first()
         if emp==None:
-            return "User Doesn't Exist!"
+            return jsonify({"OK":"true","data":{"message":"User Doesn't Exist!"}}),200
         sess.delete(emp)
         sess.commit()
-        return "Deleted!!!"
+        return jsonify({"OK":"true","data":{"message":"Data Deleted!"}}),200
     except Exception as e:
-        return {"error":str(e)}
+        sess.rollback()
+        return jsonify({"OK":"false","data":{"error":str(e)}}),422
+
 
 
 @bp.route('/employee/<int:id>/update',methods=['PUT'])
-def updatedata(id):
+def update_data(id):
     try:
         data=request.get_json()
         sess.query(Employee).filter_by(id=id).update(data)
-
         sess.commit()
-        return "Updatedddd!"
+        return jsonify({"OK":"true","data":data,"message":"Data Updated!"}),200
     except Exception as e:
-        return {"error":str(e)}
+        sess.rollback()
+        return jsonify({"OK":"false","data":{"error":str(e)}}),422
 
 @bp.route('/employee/<int:id>/fetch',methods=['GET'])
-def fet(id):
+def fetch_data(id):
     try:
         emp=sess.query(Employee).filter_by(id=id).first()
         if emp==None:
-            return "User Doesn't Exist!"
-        return {"id":id,"data":{"title":emp.title,"dept":emp.department,"country":emp.country,"state":emp.state,"city":emp.city,"remote":emp.remote,"description":emp.description,"requirements":emp.requirements,"benifit":emp.benifits,"comind":emp.company_industry,"job_fun":emp.job_function,"employment_type":emp.employment_type,"experience":emp.experience,"education":emp.education,"keywords":emp.keywords,"salaryFrom":emp.salary_from,"salaryTo":emp.salary_to,"currency":emp.currency}}
+            return jsonify({"OK":"true","data":{"message":"User Doesn't Exist!"}}),200
+        return {"id":id,"OK":"true","data":{"title":emp.title,"dept":emp.department,"country":emp.country,"state":emp.state,"city":emp.city,"remote":emp.remote,"description":emp.description,"requirements":emp.requirements,"benifit":emp.benifits,"comind":emp.company_industry,"job_fun":emp.job_function,"employment_type":emp.employment_type,"experience":emp.experience,"education":emp.education,"keywords":emp.keywords,"salaryFrom":emp.salary_from,"salaryTo":emp.salary_to,"currency":emp.currency}}
     except Exception as e:
-        return {"Error":str(e)}
+        return jsonify({"OK":"false","data":{"error":str(e)}}),422
+
 
 @bp.route('/employee/fetchall',methods=['GET'])
 def fetch():
     try:
         emp=sess.query(Employee).all()
         if len(emp)==0:
-            return "Empty DataBase"
-        return {"data":[i.title for i in emp]}
+            return jsonify({"OK":"true","data":{"Message":"Empty Database"}}),200
+        return jsonify({"OK":"true","data":[i.title for i in emp]}),200
     except Exception as e:
-        return {"Error":str(e)}
+        return jsonify({"OK":"false","data":{"error":str(e)}}),422
