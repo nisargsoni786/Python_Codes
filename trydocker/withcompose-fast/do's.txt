@@ -1,0 +1,3 @@
+just ned to do docker-compose config.....to check if everything is fine
+
+(2) to actual runnng...directly run "docker-compose up"

@@ -1,0 +1,5 @@
+(1) docker build -t app-fast .
+
+(2) docker run -p 8000:8000 app-fast
+
+(3) OPTIONAL (docker exec -it <CONTAINER_NAME> /bin/sh) if want to go in the contaiiner terminal and see

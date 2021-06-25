@@ -1,0 +1,4 @@
+(1) docker build -t imdb .
+
+(2) docker run imdb    (if want to make it interactive with user input then use (docker run -it imdb) )
+
