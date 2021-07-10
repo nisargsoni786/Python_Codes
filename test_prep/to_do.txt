@@ -1,0 +1,7 @@
+app folder is of __init__ method ans with bp blueprint........
+test_app does testing of app folder and its blueprint
+
+
+
+where as method folder is with simple flask app which we simply create
+test_methos does testing for method folder and its flask app.
