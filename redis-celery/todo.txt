@@ -1,0 +1,8 @@
+for celery server in app to run 
+
+celery -A app_simple_celery.celery worker --loglevel=INFO
+
+
+
+
+celery -A api_schedule.celery worker --loglevel=INFO --beat    # --beat is very imp
