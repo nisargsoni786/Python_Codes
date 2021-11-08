@@ -22,8 +22,8 @@ body = {
 },
 'attendees': [
     {'email': 'nisarg.sict17@sot.pdpu.ac.in'},
-    {'email': 'uttam.velani@smartsensesolutions.com'},
-    {'email': 'krunal.chauhan@smartsensesolutions.com'},
+    # {'email': 'uttam.velani@smartsensesolutions.com'},
+    # {'email': 'krunal.chauhan@smartsensesolutions.com'},
 ],
 "conferenceData": {
     "createRequest" : {
@@ -35,4 +35,5 @@ body = {
 
 event = service.events().insert(calendarId="primary", sendNotifications=True, body=body, conferenceDataVersion=1).execute()
 
-print(event)
+# print(event)
+print(f"\n\n\n----DONE----\n\n\n")

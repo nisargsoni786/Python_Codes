@@ -1,11 +1,11 @@
 {
-  "installed": {
-    "client_id": "173840130101-u73bjnm9puk10e6cdqrsprk6r71mblip.apps.googleusercontent.com",
+  "web": {
+    "client_id": "173840130101-utubvsioi12d9l8ni8f1orv3h37pv37h.apps.googleusercontent.com",
     "project_id": "auth-2-330509",
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_secret": "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",
-    "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob", "http://localhost"]
+    "client_secret": "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",
+    "redirect_uris": ["http://localhost"]
   }
 }
