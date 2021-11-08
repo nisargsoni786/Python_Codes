@@ -39,7 +39,7 @@ flow.redirect_uri = "http://localhost"
 authorization_url, state = flow.authorization_url(
     access_type="offline",
     login_hint="nisarg.soni@smartsensesolutions.com",
-    include_granted_scopes="true",
+    # include_granted_scopes="true",
     prompt="consent",
 )
 
