@@ -1,0 +1,60 @@
+import logging
+import io
+import os
+import sys
+import base64
+import weasyprint
+import pandas as pd
+
+from loguru import logger
+import uvicorn, threading
+from fastapi.responses import JSONResponse
+from fastapi import FastAPI, Request, status, Response
+from fastapi.responses import StreamingResponse
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
+
+app = FastAPI()
+
+
+@app.get("/pdf")
+def test():
+    data = """
+
+        <!DOCTYPE html>
+        <html>
+        <body>
+
+        <strong>Hello JSN </strong>
+
+        <h1>My First Heading</h1>
+        <p>My first paragraph.</p>
+
+        <p>I will display A B C</p>
+        <p>I will display &#65; &#66; &#67;</p>
+
+        </body>
+        </html>
+    """
+    # dataa = base64.b64encode(data)
+    pdf = weasyprint.HTML(string=data).write_pdf()
+
+    return Response(content=pdf,media_type="application/pdf")
+
+
+@app.get("/csv")
+def test_csv():
+    df = pd.DataFrame([1,2,3,4,5,6,7],columns=["nums"])
+    stream = io.StringIO()
+
+    df.to_csv(stream,index=False)
+
+    response = StreamingResponse(iter([stream.getvalue()]),media_type="text/csv")
+    response.headers["Content-Disposition"] = "attachment; filename=export.csv"
+
+    return response
+
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8080)
