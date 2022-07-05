@@ -1,0 +1,21 @@
+@app.get("/def")
+def test():
+    data = """
+
+        <!DOCTYPE html>
+        <html>
+        <body>
+
+        <h1>My First Heading</h1>
+        <p>My first paragraph.</p>
+
+        <p>I will display A B C</p>
+        <p>I will display &#65; &#66; &#67;</p>
+
+        </body>
+        </html>
+    """
+    # dataa = base64.b64encode(data)
+    pdf = weasyprint.HTML(string=data).write_pdf()
+
+    return Response(content=pdf,media_type="application/pdf")
